@@ -32,6 +32,10 @@ type Weather struct {
 	} `json:"currentConditions"`
 }
 
+func convertToCelcius(fahrenheit float64) float64 {
+	// (°F − 32) × 5/9 = °C
+	return (fahrenheit - 32.0) * 5 / 9
+}
 func main() {
 	q := "bath"
 	var key string
@@ -70,8 +74,7 @@ func main() {
 		panic(err)
 	}
 	location, timezone, currentCondition, hours := weather.ResolvedAddress, weather.TimeZone, weather.CurrentConditions, weather.Days[0].Hours
-	//(°F − 32) × 5/9 = °C
-	temp := (currentCondition.Temp - 32.0) * 5 / 9
+	temp := convertToCelcius(currentCondition.Temp)
 
 	f.Printf("%s, %s: %.0f°C, %s\n",
 		location,
@@ -80,16 +83,15 @@ func main() {
 		currentCondition.Conditions,
 	)
 	for _, hour := range hours {
-		date := t.Unix(hour.DatetimeEpoch, 0)
-		// (°F − 32) × 5/9 = °C
-		temp := (hour.Temp - 32.0) * 5 / 9
+		timeNow := t.Unix(hour.DatetimeEpoch, 0)
+		temp := convertToCelcius(hour.Temp)
 
-		if date.Before(t.Now()) {
+		if timeNow.Before(t.Now()) {
 			continue
 		}
 
 		f.Printf("%s - %.0f°C, %s\n",
-			date.Format("15:04"),
+			timeNow.Format("15:04"),
 			temp,
 			hour.Conditions,
 		)
