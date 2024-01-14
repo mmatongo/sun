@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	fl "flag"
-	"fmt"
 	f "fmt"
 	"io"
 	"net/http"
@@ -47,7 +46,7 @@ func main() {
 	fl.Parse()
 
 	if key == "" {
-		fmt.Println("No API key provided. Exiting.")
+		f.Println("No API key provided. Exiting.")
 		os.Exit(1)
 	}
 
