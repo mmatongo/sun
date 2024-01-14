@@ -1,9 +1,9 @@
 ### USAGE
 Obtain an API key from https://visualcrossing.com/
 
-The args should be supplied in the order <location> <api key>, anything other than that will break the app
+The args should be supplied in the order <location> -key=<api key>, anything other than that will break the app
 ```bash
-go run main.go lusaka YOUR_API_KEY
+go run main.go lusaka -key=YOUR_API_KEY
 ```
 
 ### OUTPUT
